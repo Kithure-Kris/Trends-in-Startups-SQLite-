@@ -1,0 +1,56 @@
+-- Taking a look at the startups table
+select * from startups;
+
+--Total number of companies in the table
+select count(name) from startups;
+
+--Total value of all companies
+select sum(valuation) from startups;
+
+--Highest amount raised by a startup
+select max(raised) from startups;
+
+--Maximum amount of money raised during 'seed' stage.
+select max(raised) from startups
+where stage = 'Seed';
+
+--What year was the oldest company on the list founded?
+select min(founded) from startups;
+
+--LET'S FIND OUT THE VALUATIONS AMONG DIFFERENT SECTORS
+--Return average valuation
+select avg(valuation) from startups;
+
+--Return average valuation in each category
+select category, avg(valuation) from startups
+group by 1;
+
+--Round the averages to 2 decimal places and order the list from highest to lowest
+select category, round(avg(valuation),2) from startups
+group by 1
+order by 2 desc;
+
+--WHAT ARE THE MOST COMPETITIVE MARKETS?
+--Return name of each category with total number of companies that belong to it.
+
+select category, count(*) from startups
+group by 1;
+
+--Filter results to only include categories that have more than three companies in them. Which are the most competitive?
+select category, count(*) from startups
+group by 1
+having count(*) > 3
+order by 2 desc;
+
+--IS THERE A DIFFERENCE IN STARTUP SIZES AMONG DIFFERENT LOCATIONS?
+--Average size of a startup in each location?
+select location, avg(employees) from startups
+group by 1;
+
+--Those with average sizes above 500?
+select location, avg(employees) from startups
+group by 1
+having avg(employees) > 500
+order by 2 desc;
+
+
